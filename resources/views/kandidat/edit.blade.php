@@ -42,7 +42,7 @@ if (!empty($queryt)) {
                         </div>
 
                         <div class="form-group col-sm-6">
-                <label for="formGroupExampleInput">Id Ketua</label>
+                <label for="formGroupExampleInput">Id Wakil</label>
                 <select required name="id_wakil" name="id_wakil" class="form-select form-control mt-1 mb-3" aria-label="Default select example">
                 <option value="{{$main->id_wakil}}">{{ $wakil }}</option>
                 @foreach ($allwakil as $p)

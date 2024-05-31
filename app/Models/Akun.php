@@ -32,4 +32,10 @@ class Akun extends Model
       DB::table('tb_akun')->where('nis_nip', $id)->delete();
   }
 
+  public function BelumVoting() {
+    return DB::table('tb_akun')
+        ->where('status', 'Belum Voting')
+        ->get();
+}
+
 }

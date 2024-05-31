@@ -4,36 +4,53 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Voting;
+use App\Models\akun;
+use App\Models\kandidat;
 
 class VotingController extends Controller
 {
     public function __construct(){
         $this ->voting = new Voting();
+        $this ->akun = new akun();
+        $this ->kandidat = new kandidat();
+       
     }
 
-    public function index() {
+    public function voting() {
+        if(!session('login')){
+            return redirect('/');
+        }else{
         $alldata = [
             'allvoting' => $this->voting->alldata(), // mengambil class pada models alldata
         ];
         return view('voting.voting', $alldata);
     }
+}
 
 
  // ke form tambah
  public function tambah(){
+    if(!session('login')){
+        return redirect('/');
+    }else{
 
-    return view('voting.tambahvoting');
+        $alldata = [
+            'voting'=>$this->voting->alldata(), // mengambil class pada models alldata
+            'akun'=>$this->akun->alldata(),
+            'kandidat'=>$this->kandidat->alldata(),
+        ];
+        return view('voting.tambahvoting', $alldata);
+    }
 }
 
 // simpan data
-public function save(){
+public function simpan(){
     Request()->validate([
-        'id_ketua' => 'required|max:155',
-        'nis' => 'required|max:255',
-        'nama_ketua' => 'required|max:255',
-        'jenis_kelamin' => 'required|max:255',
+        'nis_nip' => 'required|max:155',
+        'nama_lengkap' => 'required|max:255',
         'kelas' => 'required|max:255',
-        'nomor_hp' => 'required|max:255',
+        'id_kandidat' => 'required|max:255',
+        'tgl_memilih' => 'required|max:255',
 
     ],[
         
@@ -42,40 +59,45 @@ public function save(){
         'pesan.required' => 'pesan wajib diisi yah',
     ]);
 
+    // Data yang akan disimpan
     $data = [
-        'id_ketua' => Request()->id_ketua,
-        'nis' => Request()->nis,
-        'nama_ketua' => Request()->nama_ketua,
-        'jenis_kelamin' => Request()->jenis_kelamin,
-        'kelas' => Request()->kelas,
-        'nomor_hp' => Request()->nomor_hp,
+        'nis_nip' => request()->nis_nip,
+        'nama_lengkap' => request()->nama_lengkap,
+        'kelas' => request()->kelas,
+        'id_kandidat' => request()->id_kandidat,
+        'tgl_memilih' =>request()->tgl_memilih,
     ];
 
-    $this->ketua->addpesan($data);
-    return redirect()->route('ketua');
-
+   // Menyimpan data ke database
+   $this->voting->addpesan($data);
+   return redirect()->route('voting', ['alert' => 'success']); // Menggunakan with() untuk mengirim pesan flash
 }
 
 
 
 // ke form edit
-public function edit($id_ketua){
+public function edit($nis_nip){
+    if(!session('login')){
+        return redirect('/');
+    }else{
     $data = [
-        'main' => $this->ketua->editdata($id_ketua),
+        'main'=>$this->voting->editakandidat($nis_nip),
+            'allakun'=>$this->akun->alldata(),
+            'allkandidat'=>$this->kandidat->alldata(),
     ];
-    return view ('ketuaosis.editketuaosis',$data);
+    return view ('voting.edit',$data);
+}
 }
 
 
 // update
-public function update($id_ketua){
+public function update($nis_nip){
     request()->validate([
-        'id_ketua' => 'required|max:155',
-        'nis' => 'required|max:255',
-        'nama_ketua' => 'required|max:255',
-        'jenis_kelamin' => 'required|max:255',
+        'nis_nip' => 'required|max:155',
+        'nama_lengkap' => 'required|max:255',
         'kelas' => 'required|max:255',
-        'nomor_hp' => 'required|max:255',
+        'id_kandidat' => 'required|max:255',
+        'tgl_memilih' => 'required|max:255',
     ],[
         'nama.required' => 'judul wajib diisi yah',
         'status.required' => 'status wajib diisi yah',
@@ -83,24 +105,26 @@ public function update($id_ketua){
     ]);
 
     $data = [
-        'id_ketua' => Request()->id_ketua,
-        'nis' => Request()->nis,
-        'nama_ketua' => Request()->nama_ketua,
-        'jenis_kelamin' => Request()->jenis_kelamin,
-        'kelas' => Request()->kelas,
-        'nomor_hp' => Request()->nomor_hp,
+        'nis_nip' => Request()->nis_nip,
+        'nama_lengkap' => Request()->nama_lengkap,
+        'kelas' => request()->kelas,
+        'id_kandidat' => request()->id_kandidat,
+        'tgl_memilih' =>request()->tgl_memilih,
     ];
 
-    $this->ketua->ubahdata($id_ketua, $data);
+    $this->voting->ubahdata($nis_nip, $data);
 
-    return redirect()->route('ketua');
+    return redirect()->route('voting');
 }
 
-public function hapus($id_ketua){
+public function hapus($nis_nip){
+    if(!session('login')){
+        return redirect('/');
+    }else{
 
-    $this->ketua->hapus($id_ketua);
-    return redirect()->route('ketua');
-    
+    $this->voting->hapus($nis_nip);
+    return redirect()->route('voting');
+    }
 }
 
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\VotingController;
+use App\Http\Controllers\datapolingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,11 +74,12 @@ Route::get('/kandidat/hapus/{id_kandidat}',[KandidatController::class, 'hapusDat
 
 
 // Voting
-Route::get('/voting',[VotingController::class,'index'])->name('index');
-Route::get('/voting/edit/{id_kandidat}',[VotingController::class,'editakandidat']);
-Route::post('/voting/update/{id_kandidat}',[VotingController::class, 'update']);
+Route::get('/voting',[VotingController::class,'voting'])->name('voting');
+Route::get('/voting/edit/{nis_nip}',[VotingController::class,'edit']);
+Route::post('/voting/update/{nis_nip}',[VotingController::class, 'update']);
 Route::get('/voting/tambah',[VotingController::class, 'tambah']);
 // Route::post('/kandidat/simpan',[VotingController::class, 'save']);
-Route::get('/voting/hapus/{id_kandidat}',[VotingController::class, 'hapusData']);
+Route::get('/voting/hapus/{nis_nip}',[VotingController::class, 'hapusData']);
 
-
+// datapoling
+Route::get('/datapoling',[datapolingController::class,'index'])->name('index');

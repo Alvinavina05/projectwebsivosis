@@ -49,7 +49,12 @@
                                     <!-- List Sidebar -->
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/voting"
                                 aria-expanded="false"><i class="fas fa-vote-yea"></i><span
-                                    class="hide-menu">Data Voting</span></a></li>            
+                                    class="hide-menu">Data Voting</span></a></li>
+                                    
+                                    <!-- List Sidebar -->
+                        {{-- <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="/datapoling"
+                            aria-expanded="false"><i class="fas fa-vote-yea"></i><span
+                                class="hide-menu">Data Poling</span></a></li>  --}}
                 
 
                         <li class="list-divider"></li>

@@ -32,16 +32,18 @@ class KandidatController extends Controller
 
 
 
-    public function tambah()
-    {
-        if(!session('login')){
-            return redirect('/');
-        }else{
-        $alldata = [
-            'kandidat'=>$this->kandidat->alldata(), // mengambil class pada models alldata
-        ];
-        return view('kandidat.tambah', $alldata);
-    }
+public function tambah()
+{
+    if(!session('login')){
+        return redirect('/');
+    }else{
+    $alldata = [
+        'kandidat'=>$this->kandidat->alldata(), // mengambil class pada models alldata
+        'ketua'=>$this->ketua->alldata(),
+        'wakil'=>$this->wakil->alldata(),
+    ];
+    return view('kandidat.tambah', $alldata);
+}
 }
 
     /**

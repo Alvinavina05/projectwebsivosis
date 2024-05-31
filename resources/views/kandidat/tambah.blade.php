@@ -40,7 +40,7 @@ if ($newNumber < 10) {
                 <label for="formGroupExampleInput">Ketua</label>
                 <select required name="id_ketua" class="form-select form-control mt-1 mb-3" aria-label="Default select example">
                                 
-                                 @foreach ($kandidat as $p)
+                                 @foreach ($ketua as $p)
                                  <option value="{{$p->id_ketua}}">{{$p->nama_ketua}}</option>
                                  @endforeach
                                 </select>
@@ -49,7 +49,7 @@ if ($newNumber < 10) {
                         <div class="form-group col-sm-6">
                 <label for="formGroupExampleInput">Wakil</label>
                 <select required name="id_wakil" class="form-select form-control mt-1 mb-3" aria-label="Default select example">
-                  @foreach ($kandidat as $p)
+                  @foreach ($wakil as $p)
                   <option value="{{$p->id_wakil}}">{{$p->nama_wakil}}</option>
                   @endforeach
                    </select>
